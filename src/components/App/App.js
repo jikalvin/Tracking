@@ -14,8 +14,8 @@ function App() {
     <BrowserRouter>
       <UserProvider>
         <Routes>
-          <Route element={<Protected view={<Main/>} />} path={"/create"} />
           <Route element={<Login />} path="/login"/>
+          <Route element={<Protected view={<Main/>} />} path={"/create"} />
           <Route element={<Show />} path="/show/:id" />
           <Route element={<Home />} path="/" />
         </Routes>

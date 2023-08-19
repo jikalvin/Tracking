@@ -1,9 +1,9 @@
-import { Stack, Table, TextField} from "@mui/material"
+import { Stack, Table, TextField, Typography} from "@mui/material"
 import { Container, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useState, useEffect,useRef, useMemo } from 'react';
 import { useLoadScript } from "@react-google-maps/api";
-import {Grid} from "@mui/material";
+import { Button, Grid } from '@mui/material';
 
 import "./mapstyle.css"
 
@@ -53,82 +53,70 @@ export default function(){
       }, [search, bks]);
 
     return(
-        <Stack
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-            }}
-        >
-            <Stack maxWidth="md" sx={
-                { 
-                    mt: 20,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%"
-                }
-            }>
-                <TextField 
-                    sx={{ width: "40%"}} 
-                    type="search" 
-                    label="Search" 
-                    value={search} 
-                    onChange={(e) => setSearch(e.target.value)}
-                    InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <SearchIcon
-                                style={{
-                                    cursor: "pointer",
-                                }}
-                            />
-                          </InputAdornment>
-                        ),
-                      }}
-                />
-            </Stack>
-            {search === "" ? "Enter Code In Search Bar" : <Grid item xs={12} sx={{
-                marginTop: 10,
-                marginBottom: 10,
-            }}>
-                {loading ? <h3>Loading Info...</h3> :<Table 
-                    style={{
-                        width:'95%',
-                        display:'block',
-                        overflowX:'auto'
-                    }}    
-                >
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Sender's Name</TableCell>
-                        <TableCell align="right">Receiver's Name</TableCell>
-                        <TableCell align="right">Product</TableCell>
-                        <TableCell align="right">Packages</TableCell>
-                        <TableCell align="right">Code</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {filteredContacts.map((row) => (
-                    <TableRow
-                    key={row.code}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        <Grid container spacing={1} alignItems={"center"} justifyContent={"center"} style={{height: "90vh"}}>
+            <Grid item>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Typography sx={{textAlign: "center"}} variant="h6">Enter the consignment number</Typography>
+                    <TextField 
+                        fullWidth
+                        type="search" 
+                        label="Search" 
+                        value={search} 
+                        onChange={(e) => setSearch(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                            <InputAdornment position="end">
+                                <SearchIcon
+                                    style={{
+                                        cursor: "pointer",
+                                    }}
+                                />
+                            </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <Button variant="contained" color="primary" fullWidth style={{marginTop: "0.8em"}} >
+                        Search
+                    </Button>
+                </Grid>
+                {search === "" ? "" : <Grid item xs={12} sx={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                }}>
+                    {loading ? <h3>Loading Info...</h3> :<Table 
+                        style={{
+                            width:'95%',
+                            display:'block',
+                            overflowX:'auto'
+                        }}    
                     >
-                    <TableCell component="th" scope="row">
-                        {row.SFName}
-                    </TableCell>
-                    <TableCell align="right">{row.RFName}</TableCell>
-                    <TableCell align="right">{row.product}</TableCell>
-                    <TableCell align="right">{row.packages}</TableCell>
-                    <TableCell align="right">{row.code}</TableCell>
-                    <TableCell align="right">
-                        <a href={"/show/" + row.id}>View</a>
-                    </TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-                </Table>}
-            </Grid>}
-        </Stack>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Sender's Name</TableCell>
+                            <TableCell align="right">Product</TableCell>
+                            <TableCell align="right">Code</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {filteredContacts.map((row) => (
+                        <TableRow
+                        key={row.code}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                        <TableCell component="th" scope="row">
+                            {row.shipperName}
+                        </TableCell>
+                        <TableCell align="right">{row.product}</TableCell>
+                        <TableCell align="right">{row.code}</TableCell>
+                        <TableCell align="right">
+                            <a href={"/show/" + row.id}>View</a>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                    </Table>}
+                </Grid>}
+            </Grid>
+        </Grid>
     )
 }

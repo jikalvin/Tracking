@@ -4,6 +4,7 @@ import { UserContext } from '../../providers/UserProvider';
 import { auth } from '../../firebaseInit';
 import Form from '../../components/Protected/Form';
 import Checkout from '../../components/App/Checkout';
+import Form1 from '../../components/App/Form1';
 
 const StyledWrapper = styled.div`
   text-align: center;
@@ -20,12 +21,17 @@ const StyledButton = styled.button`
 export default function Main() {
   const { user } = useContext(UserContext);
 
+  const handleSignOut = () => {
+    auth.signOut()
+  }
+
   return (
     <StyledWrapper>
       <h1>Hi {user.displayName}!</h1>
-      <StyledButton onClick={() => auth.signOut()}>Sign Out</StyledButton>
+      <StyledButton onClick={handleSignOut}>Sign Out</StyledButton>
       {/* <Form /> */}
-      <Checkout />
+      {/* <Checkout /> */}
+      <Form1 />
     </StyledWrapper>
   )
 };
